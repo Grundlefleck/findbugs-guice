@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://findbugs.googlecode.com/svn/trunk/findbugs/etc/messagecollection.xsd">
+
+	<Plugin>
+		<ShortDescription>Guice</ShortDescription>
+		<Details>Finds bugs relating to Guice: http://code.google.com/p/google-guice/</Details>
+	</Plugin>
+
+	<Detector class="uk.me.tom_fitzhenry.findbugs.guice.ScopingOnInterfacesDetector">
+		<Details>
+			Finds interfaces with scoping annotations.
+		</Details>
+
+	</Detector>
+
+	<BugPattern type="GUICE_SCOPE_ON_ANNOTATION">
+		<ShortDescription>Scope annotations on interfaces</ShortDescription>
+		<LongDescription>Scope annotations on interfaces are not supported in Guice.</LongDescription>
+		<Details>
+			details
+		</Details>
+	</BugPattern>
+	
+	<BugCode abbrev="GUICE">Guice bugcode abbreviation</BugCode>
+
+</MessageCollection>

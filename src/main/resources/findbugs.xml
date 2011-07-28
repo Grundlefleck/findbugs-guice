@@ -1,0 +1,16 @@
+<FindbugsPlugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://findbugs.googlecode.com/svn/trunk/findbugs/etc/findbugsplugin.xsd" 
+        pluginid="uk.me.tom_fitzhenry.findbugs.guice"
+        defaultenabled="true"
+        provider="Guice best practices"
+        website="http://google.com"> 
+
+        <Detector class="uk.me.tom_fitzhenry.findbugs.guice.ScopingOnInterfacesDetector"
+                  speed="fast"
+                  disabled="false"
+                  reports="GUICE" />
+        
+        <BugPattern type="GUICE_SCOPE_ON_ANNOTATION" category="CORRECTNESS" />
+        
+        
+</FindbugsPlugin>
