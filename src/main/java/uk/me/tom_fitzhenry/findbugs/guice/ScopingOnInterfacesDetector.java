@@ -11,6 +11,13 @@ import edu.umd.cs.findbugs.classfile.IAnalysisCache;
 import edu.umd.cs.findbugs.classfile.analysis.AnnotationValue;
 
 public class ScopingOnInterfacesDetector implements Detector2 {
+    
+    private final static String SCOPE_ANNOTATION = "com.google.inject.ScopeAnnotation";
+    
+    static {
+        log("Registered");
+    }
+    
     private final BugReporter bugReporter;
 
     public ScopingOnInterfacesDetector(BugReporter bugReporter) {
@@ -22,15 +29,32 @@ public class ScopingOnInterfacesDetector implements Detector2 {
         final XClass classInfo = classDescriptionToXClass(classDescriptor);
 
         if (classInfo.isInterface()) {
-            for (AnnotationValue annotation : classInfo.getAnnotations()) {
-                if (annotation.getAnnotationClass().getClassName().contains("Singleton")) {
+            visitInterface(classInfo);
+        }
+    }
+    
+    private void visitInterface(XClass classInfo) {
+        for (AnnotationValue annotation : classInfo.getAnnotations()) {
+            final XClass annotationInfo = classDescriptionToXClass(annotation.getAnnotationClass());
+            for (AnnotationValue annotationAnnotation : annotationInfo.getAnnotations()) {
+                if (annotationAnnotation.getAnnotationClass().getClassName().equals(dotsToSlashes(SCOPE_ANNOTATION))) {
                     bugReporter.reportBug(new BugInstance(this, "GUICE_SCOPE_ON_ANNOTATION",
-                            NORMAL_PRIORITY).addClass(classDescriptor));
+                            NORMAL_PRIORITY).addClass(classInfo.getClassDescriptor()));
                 }
             }
         }
     }
+    
+    @Override
+    public void finishPass() {
+        // TODO Auto-generated method stub
+    }
 
+    @Override
+    public String getDetectorClassName() {
+        return getClass().getName();
+    }
+    
     private XClass classDescriptionToXClass(ClassDescriptor classDescriptor) {
         final IAnalysisCache analysisCache = Global.getAnalysisCache();
 
@@ -43,14 +67,12 @@ public class ScopingOnInterfacesDetector implements Detector2 {
         }
         return classInfo;
     }
-
-    @Override
-    public void finishPass() {
-        // TODO Auto-generated method stub
+    
+    private static void log(String string) {
+        System.out.println("[ScopingOnInterfacesDetector] " + string);
     }
-
-    @Override
-    public String getDetectorClassName() {
-        return getClass().getName();
+    
+    private String dotsToSlashes(String string) {
+        return string.replace('.', '/');
     }
 }
