@@ -37,7 +37,7 @@ public class ScopingOnInterfacesDetector implements Detector2 {
         for (AnnotationValue annotation : classInfo.getAnnotations()) {
             final XClass annotationInfo = classDescriptionToXClass(annotation.getAnnotationClass());
             for (AnnotationValue annotationAnnotation : annotationInfo.getAnnotations()) {
-                if (annotationAnnotation.getAnnotationClass().getClassName().equals(dotsToSlashes(SCOPE_ANNOTATION))) {
+                if (annotationAnnotation.getAnnotationClass().getDottedClassName().equals(SCOPE_ANNOTATION)) {
                     bugReporter.reportBug(new BugInstance(this, "GUICE_SCOPE_ON_ANNOTATION",
                             NORMAL_PRIORITY).addClass(classInfo.getClassDescriptor()));
                 }
@@ -70,9 +70,5 @@ public class ScopingOnInterfacesDetector implements Detector2 {
     
     private static void log(String string) {
         System.out.println("[ScopingOnInterfacesDetector] " + string);
-    }
-    
-    private String dotsToSlashes(String string) {
-        return string.replace('.', '/');
     }
 }
