@@ -2,7 +2,8 @@ package uk.me.tom_fitzhenry.findbugs.guice;
 
 import edu.umd.cs.findbugs.BugInstance;
 import edu.umd.cs.findbugs.BugReporter;
-import edu.umd.cs.findbugs.Detector2;
+import edu.umd.cs.findbugs.Detector;
+import edu.umd.cs.findbugs.ba.ClassContext;
 import edu.umd.cs.findbugs.ba.XClass;
 import edu.umd.cs.findbugs.classfile.CheckedAnalysisException;
 import edu.umd.cs.findbugs.classfile.ClassDescriptor;
@@ -10,7 +11,7 @@ import edu.umd.cs.findbugs.classfile.Global;
 import edu.umd.cs.findbugs.classfile.IAnalysisCache;
 import edu.umd.cs.findbugs.classfile.analysis.AnnotationValue;
 
-public class ScopingOnInterfacesDetector implements Detector2 {
+public class ScopingOnInterfacesDetector implements Detector {
     
     private final static String SCOPE_ANNOTATION = "com.google.inject.ScopeAnnotation";
     
@@ -23,10 +24,10 @@ public class ScopingOnInterfacesDetector implements Detector2 {
     public ScopingOnInterfacesDetector(BugReporter bugReporter) {
         this.bugReporter = bugReporter;
     }
-
+    
     @Override
-    public void visitClass(ClassDescriptor classDescriptor) {
-        final XClass classInfo = classDescriptionToXClass(classDescriptor);
+    public void visitClassContext(ClassContext classContext) {
+        final XClass classInfo = classContext.getXClass();
 
         if (classInfo.isInterface()) {
             visitInterface(classInfo);
@@ -45,16 +46,6 @@ public class ScopingOnInterfacesDetector implements Detector2 {
         }
     }
     
-    @Override
-    public void finishPass() {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public String getDetectorClassName() {
-        return getClass().getName();
-    }
-    
     private XClass classDescriptionToXClass(ClassDescriptor classDescriptor) {
         final IAnalysisCache analysisCache = Global.getAnalysisCache();
 
@@ -64,11 +55,16 @@ public class ScopingOnInterfacesDetector implements Detector2 {
         } catch (CheckedAnalysisException e) {
             bugReporter.logError("Error when converting a classDescriptor, " + classDescriptor
                     + ", " + "to an XClass.", e);
+            log(e.getMessage());
         }
         return classInfo;
     }
     
     private static void log(String string) {
         System.out.println("[ScopingOnInterfacesDetector] " + string);
+    }
+
+    @Override
+    public void report() {
     }
 }
