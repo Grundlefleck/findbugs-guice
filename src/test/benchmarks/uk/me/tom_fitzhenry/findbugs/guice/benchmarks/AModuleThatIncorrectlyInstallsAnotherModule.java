@@ -1,9 +1,8 @@
 package uk.me.tom_fitzhenry.findbugs.guice.benchmarks;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Module;
 
-public class AModuleThatIncorrectlyInstallsAnotherModule extends AbstractModule implements Module {
+public class AModuleThatIncorrectlyInstallsAnotherModule extends AbstractModule {
 
     @Override
     protected void configure() {

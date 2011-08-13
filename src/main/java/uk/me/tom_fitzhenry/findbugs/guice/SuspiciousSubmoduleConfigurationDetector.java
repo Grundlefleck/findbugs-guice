@@ -1,16 +1,11 @@
 package uk.me.tom_fitzhenry.findbugs.guice;
 
-import java.util.Arrays;
-import java.util.List;
-
 import edu.umd.cs.findbugs.BugInstance;
 import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.BytecodeScanningDetector;
 import edu.umd.cs.findbugs.ba.ClassContext;
-import edu.umd.cs.findbugs.ba.XClass;
-import edu.umd.cs.findbugs.classfile.CheckedAnalysisException;
+import edu.umd.cs.findbugs.ba.ch.Subtypes2;
 import edu.umd.cs.findbugs.classfile.ClassDescriptor;
-import edu.umd.cs.findbugs.classfile.Global;
 
 public class SuspiciousSubmoduleConfigurationDetector extends BytecodeScanningDetector {
     
@@ -25,7 +20,7 @@ public class SuspiciousSubmoduleConfigurationDetector extends BytecodeScanningDe
     
     @Override
     public void visitClassContext(ClassContext classContext) {
-        if (isModule(classContext)) {
+        if (isModule(classContext.getClassDescriptor())) {
             isModule = true;
         }
         super.visitClassContext(classContext);
@@ -53,30 +48,7 @@ public class SuspiciousSubmoduleConfigurationDetector extends BytecodeScanningDe
     }
 
     private boolean isModule(ClassDescriptor classDescriptor) {
-        ClassContext myClass = null;
-        try {
-            myClass = Global.getAnalysisCache().getClassAnalysis(ClassContext.class, classDescriptor);
-        } catch (CheckedAnalysisException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return isModule(myClass);
-    }
-
-    private static boolean isModule(ClassContext classContext) {
-        final XClass classInfo = classContext.getXClass();
-        
-        // This only returns interfaces directly implemented by classContext.
-        // Interfaces of superclasses need to be considered too.
-        List<ClassDescriptor> interfaces = Arrays.asList(classInfo.getInterfaceDescriptorList());
-        
-        for(ClassDescriptor interfaceDescriptor : interfaces) {
-            if (interfaceDescriptor.getDottedClassName().equals(MODULE_NAME)) {
-                return true;
-            }
-        }
-        
-        return false;
+        return Subtypes2.instanceOf(classDescriptor, MODULE_NAME);
     }
 
     @Override
