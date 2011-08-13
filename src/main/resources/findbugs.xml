@@ -7,16 +7,22 @@
 
         <Detector class="uk.me.tom_fitzhenry.findbugs.guice.ScopingOnInterfacesDetector"
                   speed="fast"
-                  disabled="false"
-                  reports="GUICE" />
+                  reports="GUICE_SCOPE_ON_ANNOTATION"
+        />
                   
         <Detector class="uk.me.tom_fitzhenry.findbugs.guice.SuspiciousSubmoduleConfigurationDetector"
                   speed="fast"
-                  disabled="false"
-                  reports="GUICE" />
+                  reports="GUICE_SUSPICIOUS_SUBMODULE_CONFIGURATION"
+        />
         
-        <BugPattern type="GUICE_SCOPE_ON_ANNOTATION" category="CORRECTNESS" />
-        <BugPattern type="GUICE_SUSPICIOUS_SUBMODULE_CONFIGURATION" category="CORRECTNESS" />
+        <BugPattern type="GUICE_SCOPE_ON_ANNOTATION"
+                    category="CORRECTNESS"
+                    abbrev="GUICE"
+        />
         
+        <BugPattern type="GUICE_SUSPICIOUS_SUBMODULE_CONFIGURATION"
+                    category="CORRECTNESS"
+                    abbrev="GUICE"
+        />
         
 </FindbugsPlugin>
