@@ -3,7 +3,6 @@ package uk.me.tom_fitzhenry.findbugs.guice;
 import static com.youdevise.fbplugins.tdd4fb.DetectorAssert.ofType;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import uk.me.tom_fitzhenry.findbugs.guice.benchmarks.AnInterfaceWithAScopingAnnotation;
