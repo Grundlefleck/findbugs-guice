@@ -17,6 +17,7 @@
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
 			<version>3.0</version>
+            <scope>test</scope>
 		</dependency>
 		
 		<dependency>
@@ -31,6 +32,7 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.2</version>
+            <scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -49,9 +51,9 @@
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<executions>
 					<execution>
-						<phase>generate-sources</phase>
+						<phase>generate-test-sources</phase>
 						<goals>
-							<goal>add-source</goal>
+							<goal>add-test-source</goal>
 						</goals>
 						<configuration>
 							<sources>
