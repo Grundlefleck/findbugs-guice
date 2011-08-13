@@ -38,7 +38,7 @@ public class SuspiciousSubmoduleConfigurationDetector extends BytecodeScanningDe
                 if(isAModule(getDottedClassConstantOperand())) {
                     if(isCallingConfigure()) {
                         bugReporter.reportBug(new BugInstance(this, "GUICE_SUSPICIOUS_SUBMODULE_CONFIGURATION",
-                                NORMAL_PRIORITY).addClass("foo"));
+                                NORMAL_PRIORITY).addClassAndMethod(this));
                     }
                 }
                 break;
