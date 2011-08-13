@@ -15,10 +15,6 @@ public class ScopingOnInterfacesDetector implements Detector {
     
     private final static String SCOPE_ANNOTATION = "com.google.inject.ScopeAnnotation";
     
-    static {
-        log("Registered");
-    }
-    
     private final BugReporter bugReporter;
 
     public ScopingOnInterfacesDetector(BugReporter bugReporter) {
@@ -55,13 +51,8 @@ public class ScopingOnInterfacesDetector implements Detector {
         } catch (CheckedAnalysisException e) {
             bugReporter.logError("Error when converting a classDescriptor, " + classDescriptor
                     + ", " + "to an XClass.", e);
-            log(e.getMessage());
         }
         return classInfo;
-    }
-    
-    private static void log(String string) {
-        System.out.println("[ScopingOnInterfacesDetector] " + string);
     }
 
     @Override
