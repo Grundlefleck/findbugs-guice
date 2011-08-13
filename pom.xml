@@ -24,7 +24,8 @@
             <!-- https://github.com/youdevise/test-driven-detectors4findbugs -->
 			<groupId>com.youdevise</groupId>
 			<artifactId>test-driven-detectors4findbugs</artifactId>
-			<version>0.1</version>
+            <!-- 0.2 is a version I have made but haven't yet submitted to upstream -->
+			<version>0.2</version>
 			<scope>test</scope>
 		</dependency>
 

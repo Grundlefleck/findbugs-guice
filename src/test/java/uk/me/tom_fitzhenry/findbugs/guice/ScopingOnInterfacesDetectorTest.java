@@ -30,12 +30,6 @@ public class ScopingOnInterfacesDetectorTest {
     }
     
     @Test
-    @Ignore("this test passes, but only when using a custom version tdd4findbugs, that scans " +
-    		"the classpath for JAR files (crucially scanning guice.jar which contains " +
-    		"com.google.inject.Singleton, which AnInterfaceWithAScopingAnnotation uses. " +
-    		"Until I find away around this (such as including Singleton.java bundled with this " +
-    		"package (eww), or push my changes to the tdd4findbugs maintainers, I'm going to " +
-    		" disable this test.")
     public void interfaceWithScopingAnnotationIsReported() throws Exception {
         assertBugReportedAgainstClass(AnInterfaceWithAScopingAnnotation.class);
     }
