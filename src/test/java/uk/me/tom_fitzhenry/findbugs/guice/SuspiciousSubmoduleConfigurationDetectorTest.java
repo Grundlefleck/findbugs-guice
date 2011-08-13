@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import uk.me.tom_fitzhenry.findbugs.guice.benchmarks.AModuleThatCorrectlyInstallsAnotherModule;
 import uk.me.tom_fitzhenry.findbugs.guice.benchmarks.AModuleThatIncorrectlyInstallsAnotherModule;
+import uk.me.tom_fitzhenry.findbugs.guice.benchmarks.AModuleThatIncorrectlyInstallsAnotherModuleUsingAnInterface;
 
 import com.youdevise.fbplugins.tdd4fb.DetectorAssert;
 
@@ -31,6 +32,11 @@ public class SuspiciousSubmoduleConfigurationDetectorTest {
     @Test
     public void modulesThatIncorrectlyInstallModulesAreReported() throws Exception {
         assertBugReportedAgainstClass(AModuleThatIncorrectlyInstallsAnotherModule.class);
+    }
+    
+    @Test
+    public void modulesThatConfigureSubModulesAsInterfacesAreReported() throws Exception {
+        assertBugReportedAgainstClass(AModuleThatIncorrectlyInstallsAnotherModuleUsingAnInterface.class);
     }
     
     private void assertBugReportedAgainstClass(Class<?> classToTest) throws Exception {
