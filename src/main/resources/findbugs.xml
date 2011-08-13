@@ -9,8 +9,14 @@
                   speed="fast"
                   disabled="false"
                   reports="GUICE" />
+                  
+        <Detector class="uk.me.tom_fitzhenry.findbugs.guice.SuspiciousSubmoduleConfigurationDetector"
+                  speed="fast"
+                  disabled="false"
+                  reports="GUICE" />
         
         <BugPattern type="GUICE_SCOPE_ON_ANNOTATION" category="CORRECTNESS" />
+        <BugPattern type="GUICE_SUSPICIOUS_SUBMODULE_CONFIGURATION" category="CORRECTNESS" />
         
         
 </FindbugsPlugin>

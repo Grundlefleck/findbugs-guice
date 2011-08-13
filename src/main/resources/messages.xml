@@ -11,12 +11,25 @@
 		<Details>
 			Finds interfaces with scoping annotations.
 		</Details>
-
+	</Detector>
+	
+	<Detector class="uk.me.tom_fitzhenry.findbugs.guice.SuspiciousSubmoduleConfigurationDetector">
+		<Details>
+			Finds suspiciously configuration of submodules.
+		</Details>
 	</Detector>
 
 	<BugPattern type="GUICE_SCOPE_ON_ANNOTATION">
 		<ShortDescription>Scope annotations on interfaces</ShortDescription>
 		<LongDescription>Scope annotations on interfaces are not supported in Guice.</LongDescription>
+		<Details>
+			details
+		</Details>
+	</BugPattern>
+	
+	<BugPattern type="GUICE_SUSPICIOUS_SUBMODULE_CONFIGURATION">
+		<ShortDescription>Suspicious sub module configuration</ShortDescription>
+		<LongDescription>Submodules should be configured via install(Module)</LongDescription>
 		<Details>
 			details
 		</Details>
