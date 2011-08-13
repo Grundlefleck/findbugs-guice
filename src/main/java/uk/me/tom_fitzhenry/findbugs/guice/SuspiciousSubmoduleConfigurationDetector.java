@@ -8,7 +8,9 @@ import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.BytecodeScanningDetector;
 import edu.umd.cs.findbugs.ba.ClassContext;
 import edu.umd.cs.findbugs.ba.XClass;
+import edu.umd.cs.findbugs.classfile.CheckedAnalysisException;
 import edu.umd.cs.findbugs.classfile.ClassDescriptor;
+import edu.umd.cs.findbugs.classfile.Global;
 
 public class SuspiciousSubmoduleConfigurationDetector extends BytecodeScanningDetector {
     
@@ -35,7 +37,7 @@ public class SuspiciousSubmoduleConfigurationDetector extends BytecodeScanningDe
             switch(seen) {
             case INVOKEVIRTUAL:
             case INVOKEINTERFACE:
-                if(isAModule(getDottedClassConstantOperand())) {
+                if(isModule(getClassDescriptorOperand())) {
                     if(isCallingConfigure()) {
                         bugReporter.reportBug(new BugInstance(this, "GUICE_SUSPICIOUS_SUBMODULE_CONFIGURATION",
                                 NORMAL_PRIORITY).addClassAndMethod(this));
@@ -50,8 +52,15 @@ public class SuspiciousSubmoduleConfigurationDetector extends BytecodeScanningDe
         return getNameConstantOperand().equals("configure");
     }
 
-    private boolean isAModule(String dottedClassConstantOperand) {
-        return dottedClassConstantOperand.equals("uk.me.tom_fitzhenry.findbugs.guice.benchmarks.SubModule");
+    private boolean isModule(ClassDescriptor classDescriptor) {
+        ClassContext myClass = null;
+        try {
+            myClass = Global.getAnalysisCache().getClassAnalysis(ClassContext.class, classDescriptor);
+        } catch (CheckedAnalysisException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return isModule(myClass);
     }
 
     private static boolean isModule(ClassContext classContext) {

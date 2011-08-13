@@ -1,9 +1,10 @@
 package uk.me.tom_fitzhenry.findbugs.guice.benchmarks;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Module;
 import com.google.inject.Provides;
 
-public class SubModule extends AbstractModule {
+public class SubModule extends AbstractModule implements Module {
 
     @Override
     protected void configure() {
