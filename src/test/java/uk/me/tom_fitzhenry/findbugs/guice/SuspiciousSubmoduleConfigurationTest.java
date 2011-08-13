@@ -12,7 +12,7 @@ import com.google.inject.ConfigurationException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-public class IncorrectSubmoduleConfigurationTest {
+public class SuspiciousSubmoduleConfigurationTest {
 
     @Test
     public void configuringASubModuleMissesProviderBindings() {
